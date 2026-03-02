@@ -1,4 +1,6 @@
 import logging
+import os
+import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
@@ -21,6 +23,10 @@ class ModelTrainer:
         predictions = model.predict(X_test)
         mse = mean_squared_error(y_test, predictions)
 
+        os.makedirs("artifacts", exist_ok=True)
+        joblib.dump(model, "artifacts/model.pkl")
+
         logging.info(f"Model training completed. MSE: {mse}")
+        logging.info("Model saved to artifacts/model.pkl")
 
         return model, mse
